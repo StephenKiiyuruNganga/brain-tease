@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Difficulty, fetchQuestions, Questions } from "./API"
 import QuestionCard from "./components/QuestionCard"
+import { GlobalStyle, Wrapper } from "./App.styles"
 
 const TOTAL_QUESTIONS = 10
 
@@ -60,37 +61,40 @@ const App = () => {
   }
 
   return (
-    <div className="App">
-      <h1>Brain Tease</h1>
-      {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
-        <button className="start" onClick={startTrivia}>
-          Start
-        </button>
-      ) : null}
+    <>
+      <GlobalStyle />
+      <Wrapper>
+        <h1>Brain Tease</h1>
+        {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
+          <button className="start" onClick={startTrivia}>
+            Start
+          </button>
+        ) : null}
 
-      {!gameOver && <p className="score">Score: {score}</p>}
-      {isLoading && <p>Loading Questions...</p>}
-      {!isLoading && !gameOver ? (
-        <QuestionCard
-          questionNumber={currentQuestionNumber + 1}
-          totalQuestions={TOTAL_QUESTIONS}
-          question={questions[currentQuestionNumber].question}
-          options={questions[currentQuestionNumber].options}
-          userAnswer={
-            userAnswers ? userAnswers[currentQuestionNumber] : undefined
-          }
-          onSelectAnswer={checkAnswer}
-        />
-      ) : null}
-      {!gameOver &&
-      !isLoading &&
-      userAnswers.length === currentQuestionNumber + 1 &&
-      currentQuestionNumber !== TOTAL_QUESTIONS - 1 ? (
-        <button className="next" onClick={nextQuestion}>
-          Next Question
-        </button>
-      ) : null}
-    </div>
+        {!gameOver && <p className="score">Score: {score}</p>}
+        {isLoading && <p>Loading Questions...</p>}
+        {!isLoading && !gameOver ? (
+          <QuestionCard
+            questionNumber={currentQuestionNumber + 1}
+            totalQuestions={TOTAL_QUESTIONS}
+            question={questions[currentQuestionNumber].question}
+            options={questions[currentQuestionNumber].options}
+            userAnswer={
+              userAnswers ? userAnswers[currentQuestionNumber] : undefined
+            }
+            onSelectAnswer={checkAnswer}
+          />
+        ) : null}
+        {!gameOver &&
+        !isLoading &&
+        userAnswers.length === currentQuestionNumber + 1 &&
+        currentQuestionNumber !== TOTAL_QUESTIONS - 1 ? (
+          <button className="next" onClick={nextQuestion}>
+            Next Question
+          </button>
+        ) : null}
+      </Wrapper>
+    </>
   )
 }
 
