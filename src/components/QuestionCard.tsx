@@ -1,8 +1,10 @@
+import { Answer } from "../App"
+
 interface Props {
   question: string
   options: string[]
-  onSelectAnswer: any
-  userAnswer: any
+  onSelectAnswer: (userAnswer: string) => void
+  userAnswer: Answer | undefined
   questionNumber: number
   totalQuestions: number
 }
@@ -23,8 +25,12 @@ const QuestionCard = ({
       <p dangerouslySetInnerHTML={{ __html: question }}></p>
       <div>
         {options.map((option) => (
-          <div>
-            <button disabled={userAnswer} onClick={onSelectAnswer}>
+          <div key={option}>
+            <button
+              disabled={!!userAnswer}
+              value={option}
+              onClick={() => onSelectAnswer(option)}
+            >
               <span dangerouslySetInnerHTML={{ __html: option }}></span>
             </button>
           </div>

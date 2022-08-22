@@ -1,6 +1,6 @@
 import { shuffleArray } from "./utils"
 
-export interface RawQuestion {
+export interface RawQuestions {
   category: string
   correct_answer: string
   difficulty: string
@@ -9,7 +9,7 @@ export interface RawQuestion {
   type: string
 }
 
-export interface Question extends RawQuestion {
+export interface Questions extends RawQuestions {
   options: string[]
 }
 
@@ -26,7 +26,7 @@ export const fetchQuestions = async (
   const endpoint = `https://opentdb.com/api.php?amount=${amount}&category=9&difficulty=${difficulty}&type=multiple`
   const raw_data = await fetch(endpoint)
   const data = await raw_data.json()
-  return data.results.map((question: RawQuestion) => ({
+  return data.results.map((question: RawQuestions) => ({
     ...question,
     options: shuffleArray([
       ...question.incorrect_answers,
